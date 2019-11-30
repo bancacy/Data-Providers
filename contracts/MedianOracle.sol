@@ -41,7 +41,7 @@ contract MedianOracle is Ownable, IOracle {
     uint256 public reportExpirationTimeSec;
 
     // The number of seconds since reporting that has to pass before a report
-    // is usable.
+    // is usable. /// Time between reports
     uint256 public reportDelaySec;
 
     // The minimum number of providers with valid reports to consider the
