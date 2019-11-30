@@ -27,6 +27,10 @@ contract MedianOracle is Ownable, IOracle {
 
     // Addresses of providers authorized to push reports.
     address[] public providers;
+    
+    // Addresses of the main providers authorized to push reports-
+    // base for One Honest Node (OHN)
+    address[] public mainProviders;
 
     // Reports indexed by provider address. Report[0].timestamp > 0
     // indicates provider existence.
