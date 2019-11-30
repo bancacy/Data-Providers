@@ -217,6 +217,19 @@ contract MedianOracle is Ownable, IOracle {
         providerReports[provider][0].timestamp = 1;
         emit ProviderAdded(provider);
     }
+    /**
+     * @notice Authorizes a main provider.
+     * @param provider Address of the main provider.
+     */
+    function addMainProvider(address provider)
+        external
+        onlyOwner
+    {
+        require(providerReports[provider][0].timestamp == 0);
+        providers.push(provider);
+        providerReports[provider][0].timestamp = 1;
+        emit ProviderAdded(provider);
+    }
 
     /**
      * @notice Revokes provider authorization.
