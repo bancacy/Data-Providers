@@ -23,13 +23,13 @@ contract MedianOracle is Ownable, IOracle {
     struct Report {
         uint256 timestamp;
         uint256 payload;
+        bool main;
     }
 
     // Addresses of providers authorized to push reports.
     address[] public providers;
-    
-    // Addresses of the main providers authorized to push reports-
-    // base for One Honest Node (OHN)
+
+    // Addresses of the main providers.
     address[] public mainProviders;
 
     // Reports indexed by provider address. Report[0].timestamp > 0
@@ -134,6 +134,7 @@ contract MedianOracle is Ownable, IOracle {
 
         reports[index_past].timestamp = now;
         reports[index_past].payload = payload;
+        
 
         emit ProviderReportPushed(providerAddress, payload, now);
     }
@@ -159,6 +160,7 @@ contract MedianOracle is Ownable, IOracle {
         external
         returns (uint256, bool)
     {
+        bool isMain = false;
         uint256 reportsCount = providers.length;
         uint256[] memory validReports = new uint256[](reportsCount);
         uint256 size = 0;
@@ -184,6 +186,12 @@ contract MedianOracle is Ownable, IOracle {
                 } else {
                     // Using past report.
                     validReports[size++] = providerReports[providerAddress][index_past].payload;
+                    for (uint256 j = 0; j < mainProviders.length; j++) {
+                        if(mainProviders[j] == providerAddress){
+                        isMain = true;
+                        }
+                    }
+                    
                 }
             } else {
                 // Recent report is not too recent.
@@ -209,19 +217,6 @@ contract MedianOracle is Ownable, IOracle {
      * @param provider Address of the provider.
      */
     function addProvider(address provider)
-        external
-        onlyOwner
-    {
-        require(providerReports[provider][0].timestamp == 0);
-        providers.push(provider);
-        providerReports[provider][0].timestamp = 1;
-        emit ProviderAdded(provider);
-    }
-    /**
-     * @notice Authorizes a main provider.
-     * @param provider Address of the main provider.
-     */
-    function addMainProvider(address provider)
         external
         onlyOwner
     {
