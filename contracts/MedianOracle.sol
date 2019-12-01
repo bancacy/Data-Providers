@@ -216,6 +216,11 @@ contract MedianOracle is Ownable, IOracle {
                         mainCount++;
                         isMain = true;
                         }
+                        if(mainProviders[j] != providerAddress){
+                        address nodeAddress  = mainProviders[j];
+                        uint256 nodeIndex = index_past;
+                        }
+                        
                     }
                 }
             }
@@ -224,7 +229,20 @@ contract MedianOracle is Ownable, IOracle {
         if (size < minimumProviders) {
             return (0, false);
         }
+
+        uint256 regularNodes = validReports.length - mainCount;
+        if(regularNodes != mainCount){
+            
+         while((regularNodes - 1) > mainCount){
+        validReports.push(providerReports[mainProviders[0]][index].payload);
+        }
         
+        while((regularNodes - 1) < mainCount){
+        validReports.push(providerReports[nodeAddress][nodeIndex].payload);
+        }
+        }
+
+        validReports.push(providerReports[nodeAddress][nodeIndex].payload);
 
         return (Select.computeMedian(validReports, size), true);
     }
