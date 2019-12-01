@@ -160,7 +160,6 @@ contract MedianOracle is Ownable, IOracle {
         external
         returns (uint256, bool)
     {
-        bool isMain = false;
         address MainAddress;
         uint256 index = 0;
         uint256 mainCount =0;
@@ -214,7 +213,6 @@ contract MedianOracle is Ownable, IOracle {
                         MainAddress  = mainProviders[j];
                         index = index_past;
                         mainCount++;
-                        isMain = true;
                         }
                         if(mainProviders[j] != providerAddress){
                         address nodeAddress  = mainProviders[j];
@@ -231,8 +229,13 @@ contract MedianOracle is Ownable, IOracle {
         }
 
         uint256 regularNodes = validReports.length - mainCount;
+        if(regularNodes == 0 || mainCount == 0 )
+        {
+          return (0, false);
+        }
+
         if(regularNodes != mainCount){
-            
+
          while((regularNodes - 1) > mainCount){
         validReports.push(providerReports[mainProviders[0]][index].payload);
         }
@@ -243,7 +246,7 @@ contract MedianOracle is Ownable, IOracle {
         }
 
         validReports.push(providerReports[nodeAddress][nodeIndex].payload);
-
+        
         return (Select.computeMedian(validReports, size), true);
     }
 
