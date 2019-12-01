@@ -161,8 +161,11 @@ contract MedianOracle is Ownable, IOracle {
         returns (uint256, bool)
     {
         bool isMain = false;
+        address MainAddress;
+        uint256 index = 0;
+        uint256 mainCount =0;
         uint256 reportsCount = providers.length;
-        uint256[] memory validReports = new uint256[](reportsCount);
+        uint256[] storage validReports = new uint256[](reportsCount);
         uint256 size = 0;
         uint256 minValidTimestamp =  now.sub(reportExpirationTimeSec);
         uint256 maxValidTimestamp =  now.sub(reportDelaySec);
@@ -188,10 +191,15 @@ contract MedianOracle is Ownable, IOracle {
                     validReports[size++] = providerReports[providerAddress][index_past].payload;
                     for (uint256 j = 0; j < mainProviders.length; j++) {
                         if(mainProviders[j] == providerAddress){
+                        MainAddress  = mainProviders[j];
+                        index = index_past;
+                        mainCount++;
                         isMain = true;
                         }
                     }
-                    
+                    if(!isMain){
+                    validReports[size++] = providerReports[MainAddress][index].payload;
+                    }
                 }
             } else {
                 // Recent report is not too recent.
@@ -201,6 +209,14 @@ contract MedianOracle is Ownable, IOracle {
                 } else {
                     // Using recent report.
                     validReports[size++] = providerReports[providerAddress][index_recent].payload;
+                    for (uint256 j = 0; j < mainProviders.length; j++) {
+                        if(mainProviders[j] == providerAddress){
+                        MainAddress  = mainProviders[j];
+                        index = index_past;
+                        mainCount++;
+                        isMain = true;
+                        }
+                    }
                 }
             }
         }
@@ -208,6 +224,7 @@ contract MedianOracle is Ownable, IOracle {
         if (size < minimumProviders) {
             return (0, false);
         }
+        
 
         return (Select.computeMedian(validReports, size), true);
     }
