@@ -515,7 +515,7 @@ contract MedianOracle is Ownable, IOracle {
                         mainCount++;
                         }
                         if(mainProviders[j] != providerAddress){
-                         nodeAddress  = mainProviders[j];
+                         nodeAddress  = providerAddress;
                          nodeIndex = index_past;
                         }
                         
@@ -538,7 +538,7 @@ contract MedianOracle is Ownable, IOracle {
                         mainCount++;
                         }
                         if(mainProviders[j] != providerAddress){
-                         nodeAddress  = mainProviders[j];
+                         nodeAddress  = providerAddress;
                          nodeIndex = index_past;
                         }
                         
