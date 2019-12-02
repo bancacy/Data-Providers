@@ -470,10 +470,10 @@ contract MedianOracle is Ownable, IOracle {
         uint256 public index = 0;
         uint256 public mainCount =0;
          uint256 public regularNodes;
-        uint256  public size = 0;
+        uint256  public size ;
         address public nodeAddress;
         uint256 public nodeIndex;
-        uint256[]    validReports;
+        uint256[]  public  validReports;
 
     function getData()
         external
@@ -506,7 +506,8 @@ contract MedianOracle is Ownable, IOracle {
                     emit ReportTimestampOutOfRange(providerAddress);
                 } else { Where = 4;
                     // Using past report.
-                    validReports[size++] = providerReports[providerAddress][index_past].payload;
+                    validReports.push(providerReports[providerAddress][index_past].payload);
+                    size++;
                     for (uint256 j = 0; j < mainProviders.length; j++) {
                         if(mainProviders[j] == providerAddress){
                         MainAddress  = mainProviders[j];
@@ -528,7 +529,8 @@ contract MedianOracle is Ownable, IOracle {
                     emit ReportTimestampOutOfRange(providerAddress);
                 } else {Where=7;
                     // Using recent report.
-                    validReports[size++] = providerReports[providerAddress][index_recent].payload;
+                    validReports.push(providerReports[providerAddress][index_recent].payload);
+                    size++;
                     for (uint256 j = 0; j < mainProviders.length; j++) {
                         if(mainProviders[j] == providerAddress){
                         MainAddress  = mainProviders[j];
