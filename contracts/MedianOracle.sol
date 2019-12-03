@@ -565,7 +565,9 @@ contract MedianOracle is Ownable, IOracle {
         {
           return (0, false);
         }
+         if((regularNodes - 1) == mainCount){
 
+         }
         if(regularNodes != mainCount){
 
          while((regularNodes - 1) > mainCount){
