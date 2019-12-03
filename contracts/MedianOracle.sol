@@ -543,12 +543,12 @@ contract MedianOracle is Ownable, IOracle {
                     for (uint256 j = 0; j < mainProviders.length; j++) {
                         if(mainProviders[j] == providerAddress){
                         MainAddress  = mainProviders[j];
-                        index = index_past;
+                        index = index_recent;
                         mainCount++;
                         }
                         if(mainProviders[j] != providerAddress){
                          nodeAddress  = providerAddress;
-                         nodeIndex = index_past;
+                         nodeIndex = index_recent;
                         }
                         
                     }
