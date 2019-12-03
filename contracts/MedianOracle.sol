@@ -278,8 +278,9 @@ library Select {
      * @return Median of array.
      */
     function computeMedian(uint256[] memory array, uint256 size)
+    
         internal
-        pure
+        view
         returns (uint256)
     {
         require(size > 0 && array.length >= size);
@@ -478,8 +479,16 @@ contract MedianOracle is Ownable, IOracle {
     function getData()
         external
         returns (uint256, bool)
-    {
-        
+
+    {  size=0;
+        MainAddress=address(0);
+        regularNodes=0;
+        validReports.length = 0;
+        nodeAddress= address(0);
+        nodeIndex=0;
+        mainCount =0;
+        index=0;
+        Where = 0;
         uint256   reportsCount = providers.length;
         
         uint256 minValidTimestamp =  now.sub(reportExpirationTimeSec);
