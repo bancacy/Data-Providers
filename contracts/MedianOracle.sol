@@ -566,6 +566,7 @@ contract MedianOracle is Ownable, IOracle {
           return (0, false);
         }
          if((regularNodes - 1) == mainCount){
+         return (Select.computeMedian(validReports, size), true);
 
          }
         if(regularNodes != mainCount){
@@ -573,16 +574,18 @@ contract MedianOracle is Ownable, IOracle {
          while((regularNodes - 1) > mainCount){
         validReports.push(providerReports[mainProviders[0]][index].payload);
         size++;
-        return (Select.computeMedian(validReports, size), true);
+        
 
         }
-        
+        return (Select.computeMedian(validReports, size), true);
+
         while((regularNodes - 1) < mainCount){
         validReports.push(providerReports[nodeAddress][nodeIndex].payload);
         size++;
-        return (Select.computeMedian(validReports, size), true);
+        
 
         }
+        return (Select.computeMedian(validReports, size), true);
         }
 
         validReports.push(providerReports[nodeAddress][nodeIndex].payload);
