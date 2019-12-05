@@ -574,15 +574,14 @@ contract MedianOracle is Ownable, IOracle {
          while((regularNodes - 1) > mainCount){
         validReports.push(providerReports[mainProviders[0]][index].payload);
         size++;
-        
+        mainCount++;
 
         }
-        return (Select.computeMedian(validReports, size), true);
 
         while((regularNodes - 1) < mainCount){
         validReports.push(providerReports[nodeAddress][nodeIndex].payload);
         size++;
-        
+        regularNodes++;
 
         }
         return (Select.computeMedian(validReports, size), true);
