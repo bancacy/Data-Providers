@@ -334,6 +334,8 @@ contract MedianOracle is Ownable, IOracle {
         uint256 payload;
         
     }
+    // uEquils address hardcoded
+    address public uEquils;
 
     // Addresses of providers authorized to push reports.
     address[] public providers;
@@ -352,7 +354,7 @@ contract MedianOracle is Ownable, IOracle {
 
     // The number of seconds after which the report is deemed expired.
     uint256 public reportExpirationTimeSec;
-
+ 
     // The number of seconds since reporting that has to pass before a report
     // is usable. /// Time between reports
     uint256 public reportDelaySec;
@@ -427,8 +429,11 @@ contract MedianOracle is Ownable, IOracle {
      * @notice Pushes a report for the calling provider.
      * @param payload is expected to be 18 decimal fixed point number.
      */
+    
     function pushReport(uint256 payload) external
     {
+      
+
         address providerAddress = msg.sender;
         Report[2] storage reports = providerReports[providerAddress];
         uint256[2] memory timestamps = [reports[0].timestamp, reports[1].timestamp];
@@ -592,14 +597,22 @@ contract MedianOracle is Ownable, IOracle {
         return (Select.computeMedian(validReports, size), true);
     }
 
+    function setEquils(address Equilis_)
+        external
+        onlyOwner
+    {
+        uEquils = Equilis_;
+    }
+
+
     /**
      * @notice Authorizes a provider.
      * @param provider Address of the provider.
      */
     function addProvider(address provider)
-        external
-        onlyOwner
-    {
+        external  
+    {   
+        require(msg.sender == uEquils, "Only uEquils can add providers");
         require(providerReports[provider][0].timestamp == 0);
         providers.push(provider);
         providerReports[provider][0].timestamp = 1;
