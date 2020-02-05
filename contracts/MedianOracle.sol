@@ -577,7 +577,7 @@ contract MedianOracle is Ownable, IOracle {
           return (0, false,validReportsOwnders);
         }
          if((regularNodes - 1) == mainCount){
-         return (Select.computeMedian(validReports, size), true);
+         return (Select.computeMedian(validReports, size), true,validReportsOwnders);
 
          }
         if(regularNodes != mainCount){
@@ -595,12 +595,12 @@ contract MedianOracle is Ownable, IOracle {
         regularNodes++;
 
         }
-        return (Select.computeMedian(validReports, size), true);
+        return (Select.computeMedian(validReports, size), true,validReportsOwnders);
         }
 
         validReports.push(providerReports[nodeAddress][nodeIndex].payload);
         size++;
-        return (Select.computeMedian(validReports, size), true);
+        return (Select.computeMedian(validReports, size), true,validReportsOwnders);
     }
 
     function setEquils(address Equilis_)
