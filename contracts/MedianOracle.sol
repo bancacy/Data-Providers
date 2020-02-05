@@ -316,7 +316,7 @@ library Select {
 
 
 interface IOracle {
-    function getData() external returns (uint256, bool);
+    function getData() external returns (uint256, bool,address[]);
 }
 
 
@@ -486,7 +486,7 @@ contract MedianOracle is Ownable, IOracle {
 
     function getData()
         external
-        returns (uint256, bool)
+        returns (uint256, bool,address[])
 
     {  size=0;
         MainAddress=address(0);
@@ -568,7 +568,7 @@ contract MedianOracle is Ownable, IOracle {
         }
 
         if (size < minimumProviders) {
-            return (0, false);
+            return (0, false ,0);
         }
 
          regularNodes = validReports.length - mainCount;
