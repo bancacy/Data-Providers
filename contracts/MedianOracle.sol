@@ -548,6 +548,7 @@ contract MedianOracle is Ownable, IOracle {
                     emit ReportTimestampOutOfRange(providerAddress);
                 } else {Where=7;
                     // Using recent report.
+                    validReportsOwnders.push(providerAddress);
                     validReports.push(providerReports[providerAddress][index_recent].payload);
                     size++;
                     for (uint256 j = 0; j < mainProviders.length; j++) {
