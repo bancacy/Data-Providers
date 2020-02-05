@@ -568,13 +568,13 @@ contract MedianOracle is Ownable, IOracle {
         }
 
         if (size < minimumProviders) {
-            return (0, false ,0);
+            return (0, false,validReportsOwnders);
         }
 
          regularNodes = validReports.length - mainCount;
         if(regularNodes == 0 || mainCount == 0 )
         {
-          return (0, false);
+          return (0, false,validReportsOwnders);
         }
          if((regularNodes - 1) == mainCount){
          return (Select.computeMedian(validReports, size), true);
