@@ -492,6 +492,7 @@ contract MedianOracle is Ownable, IOracle {
         MainAddress=address(0);
         regularNodes=0;
         validReports.length = 0;
+        validReportsOwnders.length = 0;
         nodeAddress= address(0);
         nodeIndex=0;
         mainCount =0;
