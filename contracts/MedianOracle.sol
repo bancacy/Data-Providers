@@ -471,15 +471,18 @@ contract MedianOracle is Ownable, IOracle {
     *         valid: Boolean indicating an aggregated value was computed successfully.
     */
     
-            address MainAddress;
+            
             uint256 public Where = 0;
         uint256 public index = 0;
         uint256 public mainCount =0;
          uint256 public regularNodes;
         uint256  public size ;
         address public nodeAddress;
+        address MainAddress;
+        address[] public validReportsOwnders;
         uint256 public nodeIndex;
         uint256[]  public  validReports;
+
 
     function getData()
         external
