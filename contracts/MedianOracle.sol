@@ -316,7 +316,7 @@ library Select {
 
 
 interface IOracle {
-    function getData() external returns (uint256, bool,address[]);
+    function getData() external returns (uint256, bool,address[] memory);
 }
 
 
@@ -486,7 +486,7 @@ contract MedianOracle is Ownable, IOracle {
 
     function getData()
         external
-        returns (uint256, bool,address[])
+        returns (uint256, bool,address[] memory)
 
     {  size=0;
         MainAddress=address(0);
