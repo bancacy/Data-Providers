@@ -488,7 +488,12 @@ contract MedianOracle is Ownable, IOracle {
         external
         returns (uint256, bool,address[] memory)
 
-    {   size=0;
+    {
+
+        require(mainProviders.length > 0, "min 1 mainProvider");
+        require(providers.length > 1, "min 2 Providers (1 main 1 reg)");
+
+        size=0;
         MainAddress=address(0);
         regularNodes=0;
         validReports.length = 0;
@@ -571,6 +576,7 @@ contract MedianOracle is Ownable, IOracle {
         if (size < minimumProviders) {
             return (0, false,validReportsOwners);
         }
+        if(mainCount == 0 || )
 
          regularNodes = validReports.length - mainCount;
         if(regularNodes == 0 || mainCount == 0 )
