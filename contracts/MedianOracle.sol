@@ -479,7 +479,7 @@ contract MedianOracle is Ownable, IOracle {
         uint256  public size ;
         address public nodeAddress;
         address MainAddress;
-        address[] public validReportsOwnders;
+        address[] public validReportsOwners;
         uint256 public nodeIndex;
         uint256[]  public  validReports;
 
@@ -492,7 +492,7 @@ contract MedianOracle is Ownable, IOracle {
         MainAddress=address(0);
         regularNodes=0;
         validReports.length = 0;
-        validReportsOwnders.length = 0;
+        validReportsOwners.length = 0;
         nodeAddress= address(0);
         nodeIndex=0;
         mainCount =0;
@@ -524,7 +524,7 @@ contract MedianOracle is Ownable, IOracle {
                     emit ReportTimestampOutOfRange(providerAddress);
                 } else { Where = 4;
                     // Using past report.
-                    validReportsOwnders.push(providerAddress);
+                    validReportsOwners.push(providerAddress);
                     validReports.push(providerReports[providerAddress][index_past].payload);
                     size++;
                     for (uint256 j = 0; j < mainProviders.length; j++) {
@@ -548,7 +548,7 @@ contract MedianOracle is Ownable, IOracle {
                     emit ReportTimestampOutOfRange(providerAddress);
                 } else {Where=7;
                     // Using recent report.
-                    validReportsOwnders.push(providerAddress);
+                    validReportsOwners.push(providerAddress);
                     validReports.push(providerReports[providerAddress][index_recent].payload);
                     size++;
                     for (uint256 j = 0; j < mainProviders.length; j++) {
@@ -568,16 +568,16 @@ contract MedianOracle is Ownable, IOracle {
         }
 
         if (size < minimumProviders) {
-            return (0, false,validReportsOwnders);
+            return (0, false,validReportsOwners);
         }
 
          regularNodes = validReports.length - mainCount;
         if(regularNodes == 0 || mainCount == 0 )
         {
-          return (0, false,validReportsOwnders);
+          return (0, false,validReportsOwners);
         }
          if((regularNodes - 1) == mainCount){
-         return (Select.computeMedian(validReports, size), true,validReportsOwnders);
+         return (Select.computeMedian(validReports, size), true,validReportsOwners);
 
          }
         if(regularNodes != mainCount){
@@ -595,12 +595,12 @@ contract MedianOracle is Ownable, IOracle {
         regularNodes++;
 
         }
-        return (Select.computeMedian(validReports, size), true,validReportsOwnders);
+        return (Select.computeMedian(validReports, size), true,validReportsOwners);
         }
 
         validReports.push(providerReports[nodeAddress][nodeIndex].payload);
         size++;
-        return (Select.computeMedian(validReports, size), true,validReportsOwnders);
+        return (Select.computeMedian(validReports, size), true,validReportsOwners);
     }
 
     function setEquils(address Equilis_)
