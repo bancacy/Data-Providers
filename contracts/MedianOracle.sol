@@ -478,7 +478,7 @@ contract MedianOracle is Ownable, IOracle {
          uint256 public regularNodes;
         uint256  public size ;
         address public nodeAddress;
-        address MainAddress;
+        address public MainAddress;
         address[] public validReportsOwners;
         uint256 public nodeIndex;
         uint256[]  public  validReports;
@@ -488,7 +488,7 @@ contract MedianOracle is Ownable, IOracle {
         external
         returns (uint256, bool,address[] memory)
 
-    {  size=0;
+    {   size=0;
         MainAddress=address(0);
         regularNodes=0;
         validReports.length = 0;
@@ -498,6 +498,7 @@ contract MedianOracle is Ownable, IOracle {
         mainCount =0;
         index=0;
         Where = 0;
+
         uint256   reportsCount = providers.length;
         
         uint256 minValidTimestamp =  now.sub(reportExpirationTimeSec);
