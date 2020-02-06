@@ -576,7 +576,7 @@ contract MedianOracle is Ownable, IOracle {
         if (size < minimumProviders) {
             return (0, false,validReportsOwners);
         }
-        if(mainCount == 0 || )
+        
 
          regularNodes = validReports.length - mainCount;
         if(regularNodes == 0 || mainCount == 0 )
