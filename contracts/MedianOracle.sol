@@ -293,10 +293,13 @@ library Select {
         }
         if (size % 2 == 1) {
             uint256 ans = array[size / 2];
-            require(ans > 0, "must be posotive")
+            require(ans > 0, "must be posotive");
             return ans;
         } else {
-            return array[size / 2].add(array[size / 2 - 1]) / 2;
+            uint256 ans2 = array[size / 2].add(array[size / 2 - 1]) / 2;
+            require(ans2 > 0, "must be posotive");
+            return ans2;
+            
         }
     }
 }
