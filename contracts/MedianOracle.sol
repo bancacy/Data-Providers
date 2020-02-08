@@ -292,7 +292,9 @@ library Select {
             }
         }
         if (size % 2 == 1) {
-            return array[size / 2];
+            uint256 ans = array[size / 2];
+            require(ans > 0, "must be posotive")
+            return ans;
         } else {
             return array[size / 2].add(array[size / 2 - 1]) / 2;
         }
