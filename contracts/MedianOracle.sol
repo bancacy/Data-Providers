@@ -351,7 +351,7 @@ contract MedianOracle is Ownable, IOracle {
     event ProviderAdded(address provider);
     event ProviderRemoved(address provider);
     event ReportTimestampOutOfRange(address provider);
-    event ProviderReportPushed(address indexed provider, uint256 payload, uint256 timestamp);
+    event ProviderReportPushed(address indexed provider, uint256 payload, address[] peers, uint256 timestamp);
 
     // The number of seconds after which the report is deemed expired.
     uint256 public reportExpirationTimeSec;
@@ -451,7 +451,7 @@ contract MedianOracle is Ownable, IOracle {
         reports[index_past].payload = payload;
         reports[index_past].validPeers = peersAddress;
 
-        emit ProviderReportPushed(providerAddress, payload, now);
+        emit ProviderReportPushed(providerAddress, payload, peersAddress , now);
     }
 
     /**
