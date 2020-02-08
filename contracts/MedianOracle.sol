@@ -432,7 +432,7 @@ contract MedianOracle is Ownable, IOracle {
     
     function pushReport(uint256 payload) external
     {
-      
+        require(payload > 0 ,"price must be positive");
 
         address providerAddress = msg.sender;
         Report[2] storage reports = providerReports[providerAddress];
