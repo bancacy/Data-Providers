@@ -332,6 +332,7 @@ contract MedianOracle is Ownable, IOracle {
     struct Report {
         uint256 timestamp;
         uint256 payload;
+        address[] validPeers;
         
     }
     // uEquils address hardcoded
@@ -430,7 +431,7 @@ contract MedianOracle is Ownable, IOracle {
      * @param payload is expected to be 18 decimal fixed point number.
      */
     
-    function pushReport(uint256 payload) external
+    function pushReport(uint256 payload, address[] peersAddress) external
     {
       
 
@@ -448,7 +449,7 @@ contract MedianOracle is Ownable, IOracle {
 
         reports[index_past].timestamp = now;
         reports[index_past].payload = payload;
-        
+        reports[index_past].validPeers = peersAddress;
 
         emit ProviderReportPushed(providerAddress, payload, now);
     }
