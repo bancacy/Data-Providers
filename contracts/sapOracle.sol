@@ -326,12 +326,12 @@ interface IOracle {
 
 
 /**
- * @title Median Oracle
+ * @title sap Oracle
  *
  * @notice Provides a value onchain that's aggregated from a whitelisted set of
  *         providers.
  */
-contract MedianOracle is Ownable, IOracle {
+contract sapOracle is Ownable, IOracle {
     using SafeMath for uint256;
 
     struct Report {
