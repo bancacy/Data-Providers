@@ -634,7 +634,7 @@ contract MedianOracle is Ownable, IOracle {
     function addProvider(address provider)
         external  
     {   
-        require(msg.sender == uEquils, "Only uEquils can add providers");
+        require(msg.sender == Equilib, "Only Equilib can add providers");
         require(providerReports[provider][0].timestamp == 0);
         providers.push(provider);
         providerReports[provider][0].timestamp = 1;
