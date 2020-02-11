@@ -342,6 +342,9 @@ contract MedianOracle is Ownable, IOracle {
     // uEquils address hardcoded
     address public uEquils;
 
+    // Equilib address hardcoded
+    address public Equilib;
+
     // Addresses of providers authorized to push reports.
     address[] public providers;
 
