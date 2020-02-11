@@ -477,7 +477,7 @@ contract sapOracle is Ownable, IOracle {
     */
     
             
-            uint256 public Where = 0;
+          
         uint256 public index = 0;
         uint256 public mainCount =0;
          uint256 public regularNodes;
@@ -507,7 +507,7 @@ contract sapOracle is Ownable, IOracle {
         nodeIndex=0;
         mainCount =0;
         index=0;
-        Where = 0;
+        
 
         uint256   reportsCount = providers.length;
         
@@ -523,17 +523,17 @@ contract sapOracle is Ownable, IOracle {
             uint256 reportTimestampRecent = reports[index_recent].timestamp;
             if (reportTimestampRecent > maxValidTimestamp) {
                 // Recent report is too recent.
-                Where++;
+                
                 uint256 reportTimestampPast = providerReports[providerAddress][index_past].timestamp;
                 if (reportTimestampPast < minValidTimestamp) {
                     // Past report is too old.
-                    Where=2;
+                   
                     emit ReportTimestampOutOfRange(providerAddress);
                 } else if (reportTimestampPast > maxValidTimestamp) {
                     // Past report is too recent.
-                    Where=3;
+                    
                     emit ReportTimestampOutOfRange(providerAddress);
-                } else { Where = 4;
+                } else { 
                     // Using past report.
                     validReportsOwners.push(providerAddress);
                     validReports.push(providerReports[providerAddress][index_past].payload);
@@ -552,12 +552,12 @@ contract sapOracle is Ownable, IOracle {
                     }
                     
                 }
-            } else { Where=5;
+            } else { 
                 // Recent report is not too recent.
-                if (reportTimestampRecent < minValidTimestamp) { Where=6;
+                if (reportTimestampRecent < minValidTimestamp) { 
                     // Recent report is too old.
                     emit ReportTimestampOutOfRange(providerAddress);
-                } else {Where=7;
+                } else {
                     // Using recent report.
                     validReportsOwners.push(providerAddress);
                     validReports.push(providerReports[providerAddress][index_recent].payload);
