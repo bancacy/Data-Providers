@@ -618,10 +618,11 @@ contract MedianOracle is Ownable, IOracle {
         return (Select.computeMedian(validReports, size), true,validReportsOwners);
     }
 
-    function setEquils(address Equilis_)
+    function setEquils(address Equilis_, address EquilibAddress)
         external
         onlyOwner
     {
+        Equilib = EquilibAddress;
         uEquils = Equilis_;
     }
 
