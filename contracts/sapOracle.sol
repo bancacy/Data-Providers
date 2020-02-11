@@ -342,6 +342,9 @@ contract sapOracle is Ownable, IOracle {
     // uEquils address hardcoded
     address public uEquils;
 
+    // Equilib address hardcoded
+    address public Equilib;
+
     // Addresses of providers authorized to push reports.
     address[] public providers;
 
@@ -615,10 +618,11 @@ contract sapOracle is Ownable, IOracle {
         return (Select.computeMedian(validReports, size), true,validReportsOwners);
     }
 
-    function setEquils(address Equilis_)
+    function setEquils(address Equilis_,address EquilibAddress)
         external
         onlyOwner
     {
+        Equilib = EquilibAddress;
         uEquils = Equilis_;
     }
 
@@ -630,7 +634,7 @@ contract sapOracle is Ownable, IOracle {
     function addProvider(address provider)
         external  
     {   
-        require(msg.sender == uEquils, "Only uEquils can add providers");
+        require(msg.sender == Equilib, "Only Equilib can add providers");
         require(providerReports[provider][0].timestamp == 0);
         providers.push(provider);
         providerReports[provider][0].timestamp = 1;
