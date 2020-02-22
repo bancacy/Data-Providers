@@ -654,8 +654,9 @@ contract MedianOracle is Ownable, IOracle {
      */
     function removeProvider(address provider)
         external
-        onlyOwner
-    {
+    {   
+        require(msg.sender == Equilib, "Only Equilib can remove providers");
+
         delete providerReports[provider];
         for (uint256 i = 0; i < providers.length; i++) {
             if (providers[i] == provider) {
@@ -663,6 +664,27 @@ contract MedianOracle is Ownable, IOracle {
                     providers[i] = providers[providers.length-1];
                 }
                 providers.length--;
+                emit ProviderRemoved(provider);
+                break;
+            }
+        }
+    }
+
+    /**
+     * @notice Revokes provider authorization.
+     * @param provider Address of the provider.
+     */
+    function removeMainProvider(address provider)
+        external
+        onlyOwner
+    {   
+      
+        for (uint256 i = 0; i < mainProviders.length; i++) {
+            if (mainProviders[i] == provider) {
+                if (i + 1  != mainProviders.length) {
+                    mainProviders[i] = mainProviders[mainProviders.length-1];
+                }
+                mainProviders.length--;
                 emit ProviderRemoved(provider);
                 break;
             }
