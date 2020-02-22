@@ -357,6 +357,8 @@ contract MedianOracle is Ownable, IOracle {
 
     event ProviderAdded(address provider);
     event ProviderRemoved(address provider);
+    event MainProviderAdded(address provider);
+    event MainProviderRemoved(address provider);
     event ReportTimestampOutOfRange(address provider);
     event ProviderReportPushed(address indexed provider, uint256 payload, uint256 timestamp);
 
@@ -645,7 +647,7 @@ contract MedianOracle is Ownable, IOracle {
         onlyOwner
     {
         mainProviders.push(provider);
-        emit ProviderAdded(provider);
+        emit MainProviderAdded(provider);
     }
 
     /**
@@ -685,7 +687,7 @@ contract MedianOracle is Ownable, IOracle {
                     mainProviders[i] = mainProviders[mainProviders.length-1];
                 }
                 mainProviders.length--;
-                emit ProviderRemoved(provider);
+                emit MainProviderRemoved(provider);
                 break;
             }
         }
